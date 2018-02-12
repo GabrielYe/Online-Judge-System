@@ -3,7 +3,7 @@ This is a online judge system used to practice algorithm problems. Users could w
 
 ## Introduction to the system:
 
-* Used `AngularJS` and `Bootstrap` for front-end.
+* Used `Angular2+` and `Bootstrap` for front-end.
 * Designed `RESTful` APIs. Utilized `NodeJS` + `ExpressJS` to create a efficient back-end.
 * Deployed `MongoDB` as a database to store the problems list and code history.
 * Utilized `Redis` as a cache system to sotre users' uncompleted code.
