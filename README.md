@@ -3,4 +3,4 @@ This is a online judge system used to practice algorithm problems. Users could w
 
 ## Introduction to the system:
 
-*Used 
+* Used 
