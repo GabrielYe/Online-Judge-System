@@ -1,0 +1,52 @@
+<app-navbar></app-navbar>
+<body>
+<div class="container" ng-controller="PopoverDempCtrl">
+    
+    <form #formRef="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="problemName">*Problem Name:</label>
+            <input name="problemName" id="problemName" required type="text"
+             class="form-control" placeholder="Please input problem name"
+             [(ngModel)]="newProblem.name" #nameRequired="ngModel">
+
+             <div [hidden]="nameRequired.valid || nameRequired.pristine"
+              class="alert alert-danger">
+              Name is required.
+             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="problemDesc">*Problem Description:</label>
+            <textarea name="problemDesc" id="problemDesc" required class="form-control"
+             placeholder="Please input problem description" rows="3"
+             [(ngModel)]="newProblem.desc" #descRequired="ngModel">
+            </textarea>
+            <div [hidden]="descRequired.valid || descRequired.pristine"
+              class="alert alert-danger">
+              Description is required.
+             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="difficulty">Problem Difficulty:</label>
+            <select name="difficulty" id="difficulty" class="form-control"
+             [(ngModel)]="newProblem.difficulty">
+            <option *ngFor="let difficulty of difficulties" [value]="difficulty">
+                {{difficulty}}
+            </option>
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-primary pull-right" 
+                 type="submit" 
+                 
+                 [disabled]="!formRef.valid">
+                 Submit Problem
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
