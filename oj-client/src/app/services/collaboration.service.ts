@@ -19,8 +19,13 @@ export class CollaborationService {
     });
   }
 
-    // Emit event to tell what changes to other collabrators and server
+  // Emit event to tell what changes to other collabrators and server
   change(delta: string): void {
     this.collaborationSocket.emit("change", delta);
+  }
+
+  // Emit event to restore buffer
+  restoreBuffer(): void {
+    this.collaborationSocket.emit("restoreBuffer");
   }
 }

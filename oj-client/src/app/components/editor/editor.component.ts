@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CollaborationService } from '../../services/collaboration.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { DataService } from '../../services/data.service';
 
 declare var ace: any;
 @Component({
@@ -14,23 +15,25 @@ export class EditorComponent implements OnInit {
   language: string = 'Java';
 
   editor: any;
+  output: string = '';
 
   sessionId: string;
 
   constructor(private collabration: CollaborationService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private dataService: DataService) { }
 
   // Define the default content for java and python in editor;
   defaultContent = {
-    'Java': `public class Solution {
+    'Java': `public class Example {
       public static void main(String[] args) {
-      // Write your code here;
+        // Type your Java code here.
       }
     }`,
-
     'Python': `class Solution:
       def example():
-        # Write your code here;`
+        # write your python code here.
+    `
   };
 
   ngOnInit() {
@@ -39,6 +42,9 @@ export class EditorComponent implements OnInit {
       .subscribe(params => {
         this.sessionId = params['id'];
         this.initEditor();
+
+        // When start the editor, restore buffer
+        this.collabration.restoreBuffer();
       });
   }
 
@@ -46,7 +52,7 @@ export class EditorComponent implements OnInit {
     // Initialize editor;
     this.editor = ace.edit("editor");
     this.editor.setTheme("ace/theme/eclipse");
-    this.editor.setFontSize(25);
+    this.editor.setFontSize(20);
     this.resetEditor();
 
     // Set up collabration socket;
@@ -76,5 +82,13 @@ export class EditorComponent implements OnInit {
   submit(): void {
     let user_code = this.editor.getValue();
     console.log(user_code);
+
+    const data = {
+      user_code: user_code,
+      lang: this.language.toLocaleLowerCase()
+    }
+
+    this.dataService.buildAndRun(data)
+      .then(res => this.output = res);
   }
 }
